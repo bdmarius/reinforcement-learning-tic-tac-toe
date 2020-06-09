@@ -8,6 +8,9 @@ class Game:
         self.player1 = player1
         self.player2 = player2
         self.board = board
+        self.playerXWins = 0
+        self.playerOWins = 0
+        self.draws = 0
 
     def playGame(self):
         playerToMove = self.player1
@@ -33,29 +36,29 @@ class Game:
         self.player2.resetStatesHistory()
 
     def playManyGames(self, numberOfGames):
-        playerXWins = 0
-        playerOWins = 0
-        draws = 0
+        self.playerXWins = 0
+        self.playerOWins = 0
+        self.draws = 0
         numberOfGamesAxis = []
         playerXWinsAxis = []
         playerOWinsAxis = []
         drawsAxis = []
         for i in range(numberOfGames):
-            totalWins = playerXWins + playerOWins + draws
+            totalWins = self.playerXWins + self.playerOWins + self.draws
             if totalWins > 0:
-                self.printStatistics(playerXWins, playerOWins, draws, i + 1)
+                self.printStatistics(self.playerXWins, self.playerOWins, self.draws, i + 1)
             self.board.resetBoard()
             self.playGame()
             if self.board.getGameResult() == constants.PLAYER_X_VAL:
-                playerXWins = playerXWins + 1
+                self.playerXWins = self.playerXWins + 1
             elif self.board.getGameResult() == constants.PLAYER_O_VAL:
-                playerOWins = playerOWins + 1
+                self.playerOWins = self.playerOWins + 1
             else:
-                draws = draws + 1
+                self.draws = self.draws + 1
             numberOfGamesAxis.append(i + 1)
-            playerXWinsAxis.append(playerXWins)
-            playerOWinsAxis.append(playerOWins)
-            drawsAxis.append(draws)
+            playerXWinsAxis.append(self.playerXWins)
+            playerOWinsAxis.append(self.playerOWins)
+            drawsAxis.append(self.draws)
 
         statistics = {"Games": numberOfGamesAxis,
                      "X": playerXWinsAxis,
@@ -69,3 +72,9 @@ class Game:
         print('X Wins: {} ({}%)'.format(str(playerXWins), str(int(playerXWins * 100 / totalWins))))
         print('O Wins: {} ({}%)'.format(str(playerOWins), str(int(playerOWins * 100 / totalWins))))
         print('Draws:  {} ({}%)'.format(str(draws), str(int(draws * 100 / totalWins))))
+
+    def printFinalStatistics(self):
+        totalWins = self.playerXWins + self.playerOWins + self.draws
+        print('X Wins: {} ({}%)'.format(str(self.playerXWins), str(int(self.playerXWins * 100 / totalWins))))
+        print('O Wins: {} ({}%)'.format(str(self.playerOWins), str(int(self.playerOWins * 100 / totalWins))))
+        print('Draws:  {} ({}%)'.format(str(self.draws), str(int(self.draws * 100 / totalWins))))

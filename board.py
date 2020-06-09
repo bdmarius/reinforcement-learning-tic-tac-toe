@@ -7,8 +7,6 @@ class Board:
     def __init__(self):
         self.board = []
         self.resetBoard()
-        self.trainingHistory = []
-        self.boardHistory = []
 
     def resetBoard(self):
         self.board = [
@@ -16,7 +14,6 @@ class Board:
             [0, 0, 0],
             [0, 0, 0]
         ]
-        self.boardHistory = []
 
     def getGameResult(self):
         # Rows
@@ -68,7 +65,6 @@ class Board:
         for i in range(len(availableMoves)):
             if position[0] == availableMoves[i][0] and position[1] == availableMoves[i][1]:
                 self.board[position[0]][position[1]] = value
-                self.boardHistory.append(copy.deepcopy(self.board))
 
     def getBoardCopy(self):
         return copy.deepcopy(self.board)
@@ -87,6 +83,3 @@ class Board:
                 print(constants.HORIZONTAL_SEPARATOR, end='')
             print(os.linesep)
             print(constants.VERTICAL_SEPARATOR)
-
-    def getBoardHistory(self):
-        return self.boardHistory

@@ -1,8 +1,9 @@
-import constants
-from strategy import Strategy
 import copy
 import random
-import json
+
+import constants
+from strategy import Strategy
+
 
 class QStrategy(Strategy):
 
@@ -10,11 +11,9 @@ class QStrategy(Strategy):
         Strategy.__init__(self, constants.Strategies.Q)
         self.learningRate = 0.2
         self.decay = 0.8
-        '''map of (board hash, board)'''
+        self.exploratory_rate = 0.1
         self.states = {}
         self.states_history = []
-        self.exploratory_rate = 0.1
-
 
     def selectMove(self, availableMoves, board, playerValue):
         probability = random.uniform(0, 1)
@@ -52,5 +51,3 @@ class QStrategy(Strategy):
 
     def resetStatesHistory(self):
         self.states_history = []
-
-
